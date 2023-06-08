@@ -1,7 +1,24 @@
 const path = require("node:path");
 const EslintWebpackPlugin = require("eslint-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniExtractPlugin = require("mini-extract-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+function getStyleLoader() {
+  return [
+    MiniCssExtractPlugin.loader,
+    "css-loader",
+
+    // postcss-loader需要在 css-loader之前，预处理器之后
+    {
+      loader: "postcss-loader",
+      options: {
+        postcssOptions: {
+          plugins: ["postcss-preset-env"], // 能解决大多数样式兼容性问题
+        },
+      },
+    },
+  ];
+}
 
 module.exports = {
   // 入口文件
@@ -21,20 +38,20 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: getStyleLoader(),
       },
       {
         test: /\.less$/i,
-        use: ["style-loader", "css-loader", "less-loader"],
+        use: [...getStyleLoader(), "less-loader"],
       },
       {
         test: /\.s[ac]ss$/i,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: [...getStyleLoader(), "sass-loader"],
       },
 
       // 打包静态资源(图片)
       {
-        test: /\.(png|jpe?g|gif|webp)$/,
+        test: /\.(png|jpe?g|gif|webp|svg)$/,
         type: "asset",
         parser: {
           dataUrlCondition: {
@@ -82,7 +99,10 @@ module.exports = {
       template: path.resolve(__dirname, "../public/index.html"),
     }),
 
-    new MiniExtractPlugin({}),
+    // 单独输出css文件，而不是 style标签内嵌在html中
+    new MiniCssExtractPlugin({
+      filename: "css/index.css",
+    }),
   ],
 
   // 开发服务器，开发模式下，不会输出到dist，在内存中编译

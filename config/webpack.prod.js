@@ -53,7 +53,7 @@ module.exports = {
 
       // 打包静态资源(图片)
       {
-        test: /\.(png|jpe?g|gif|webp)$/,
+        test: /\.(png|jpe?g|gif|webp|svg)$/,
         type: "asset",
         parser: {
           dataUrlCondition: {
