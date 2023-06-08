@@ -1,0 +1,10 @@
+body {
+  box-sizing: border-box;
+  width: 90vw;
+  height: 90vh;
+}
+.app {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
