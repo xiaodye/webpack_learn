@@ -23,7 +23,7 @@ function getStyleLoader() {
 
 module.exports = {
   // 入口文件
-  entry: "./src/main.js",
+  entry: "./src/index.js",
 
   // 输出
   output: {

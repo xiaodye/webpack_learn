@@ -30,7 +30,7 @@ module.exports = {
     path: undefined,
 
     // 入口文件打包地方
-    filename: "js/main.js",
+    filename: "js/index.js",
   },
 
   // 加载器
