@@ -3,23 +3,7 @@ const EslintWebpackPlugin = require("eslint-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-
-function getStyleLoader() {
-  return [
-    MiniCssExtractPlugin.loader,
-    "css-loader",
-
-    // postcss-loader需要在 css-loader之前，预处理器之后
-    {
-      loader: "postcss-loader",
-      options: {
-        postcssOptions: {
-          plugins: ["postcss-preset-env"], // 能解决大多数样式兼容性问题
-        },
-      },
-    },
-  ];
-}
+const getStyleLoader = require("./getStyleLoader");
 
 module.exports = {
   // 入口文件
