@@ -27,10 +27,10 @@ module.exports = {
 
   // 输出
   output: {
-    path: path.resolve(__dirname, "../dist"), // 打包根目录
+    path: path.resolve(__dirname, "../build"), // 打包根目录
 
     // 入口文件打包地方
-    filename: "./js/main.js", // 相对路径
+    filename: "./js/index.js", // 相对路径
     clean: true, // 打包前清空打包目录
   },
 

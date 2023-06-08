@@ -22,7 +22,7 @@ function getStyleLoader() {
 
 module.exports = {
   // 入口文件
-  entry: "./src/main.js", // 相对路径（从项目根目录开始）
+  entry: "./src/index.js", // 相对路径（从项目根目录开始）
 
   // 输出
   output: {
