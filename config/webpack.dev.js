@@ -66,7 +66,9 @@ module.exports = {
             use: {
               loader: "babel-loader",
               options: {
-                presets: ["@babel/preset-env"],
+                // presets: ["@babel/preset-env"],
+                cacheDirectory: true, // 开启babel缓存
+                cacheCompression: true, // 关闭缓存文件压缩
               },
             },
           },
@@ -80,6 +82,8 @@ module.exports = {
     new EslintWebpackPlugin({
       // 检查哪些文件
       context: path.resolve(__dirname, "../src"),
+      cache: true,
+      cacheLocation: path.resolve(__dirname, "../node_modules/.cache/eslintcache"),
     }),
     new HtmlWebpackPlugin({
       // 以*为模板，创建新的html文件
