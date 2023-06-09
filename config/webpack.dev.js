@@ -93,9 +93,11 @@ module.exports = {
   devServer: {
     host: "localhost",
     port: 3001,
-    open: true, // 是否自动打开浏览器
+    open: true, // 是否自动打开浏览器,
+    hmr: true, // 热模块更替
   },
 
   // 生成 | 开发
   mode: "development",
+  devtool: "cheap-module-source-map",
 };

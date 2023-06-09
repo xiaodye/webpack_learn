@@ -99,4 +99,5 @@ module.exports = {
 
   // 生产 | 开发
   mode: "production",
+  devtool: "source-map",
 };
