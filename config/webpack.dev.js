@@ -1,8 +1,11 @@
 const path = require("node:path");
+const os = require("node:os");
 const EslintWebpackPlugin = require("eslint-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const getStyleLoader = require("./getStyleLoader");
+
+const threads = os.cpus().length; // cpu核数
 
 module.exports = {
   // 入口文件
@@ -63,14 +66,23 @@ module.exports = {
             test: /\.js$/i,
             // exclude: "/node_modules",
             include: path.resolve(__dirname, "../src"),
-            use: {
-              loader: "babel-loader",
-              options: {
-                // presets: ["@babel/preset-env"],
-                cacheDirectory: true, // 开启babel缓存
-                cacheCompression: true, // 关闭缓存文件压缩
+            use: [
+              // 开启多进程
+              {
+                loader: "thread-loader",
+                options: {
+                  works: threads, // 进程数量
+                },
               },
-            },
+              {
+                loader: "babel-loader",
+                options: {
+                  // presets: ["@babel/preset-env"],
+                  cacheDirectory: true, // 开启babel缓存
+                  cacheCompression: true, // 关闭缓存文件压缩
+                },
+              },
+            ],
           },
         ],
       },

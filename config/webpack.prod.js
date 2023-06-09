@@ -112,15 +112,19 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "css/index.css",
     }),
-
-    // 压缩css
-    new CssMinimizerPlugin(),
-
-    // 多进程打包
-    new TerserWebpackPlugin({
-      parallel: threads,
-    }),
   ],
+
+  optimization: {
+    // 压缩
+    minimizer: [
+      // 压缩css
+      new CssMinimizerPlugin(),
+      // 压缩js
+      new TerserWebpackPlugin({
+        parallel: threads,
+      }),
+    ],
+  },
 
   // 生产 | 开发
   mode: "production",
