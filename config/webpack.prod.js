@@ -22,51 +22,56 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/i,
-        // use: ["style-loader", "css-loader"],
-        use: getStyleLoader(),
-      },
-      {
-        test: /\.less$/i,
-        use: [...getStyleLoader(), "less-loader"],
-      },
-      {
-        test: /\.s[ac]ss$/i,
-        use: [...getStyleLoader(), "sass-loader"],
-      },
-
-      // 打包静态资源(图片)
-      {
-        test: /\.(png|jpe?g|gif|webp|svg)$/,
-        type: "asset",
-        parser: {
-          dataUrlCondition: {
-            maxSize: 1 * 1024,
+        // 每个文件只能被其中一个loader配置处理
+        oneOf: [
+          {
+            test: /\.css$/i,
+            use: getStyleLoader(),
           },
-        },
-        generator: {
-          filename: "static/[hash][ext][query]",
-        },
-      },
-      // 打包静态资源（字体图标，音频，视频）
-      {
-        test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
-        type: "asset/resource",
-        generator: {
-          filename: "static/[hash][ext][query]",
-        },
-      },
-
-      // babel
-      {
-        test: /\.js$/i,
-        exclude: "/node_modules",
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"],
+          {
+            test: /\.less$/i,
+            use: [...getStyleLoader(), "less-loader"],
           },
-        },
+          {
+            test: /\.s[ac]ss$/i,
+            use: [...getStyleLoader(), "sass-loader"],
+          },
+
+          // 打包静态资源(图片)
+          {
+            test: /\.(png|jpe?g|gif|webp|svg)$/,
+            type: "asset",
+            parser: {
+              dataUrlCondition: {
+                maxSize: 1 * 1024,
+              },
+            },
+            generator: {
+              filename: "static/[hash][ext][query]",
+            },
+          },
+          // 打包静态资源（字体图标，音频，视频）
+          {
+            test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
+            type: "asset/resource",
+            generator: {
+              filename: "static/[hash][ext][query]",
+            },
+          },
+
+          // babel
+          {
+            test: /\.js$/i,
+            // exclude: "/node_modules",
+            include: path.resolve(__dirname, "../src"),
+            use: {
+              loader: "babel-loader",
+              options: {
+                presets: ["@babel/preset-env"],
+              },
+            },
+          },
+        ],
       },
     ],
   },
