@@ -13,7 +13,7 @@
     "browser": true // 启用web api 全局变量
   },
 
-  "extends": ["eslint:recommended"],
+  // "extends": ["eslint:recommended"],
 
   // 具体检测规则
   "rules": {
