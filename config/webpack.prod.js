@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
+const WorkboxPlugin = require("workbox-webpack-plugin");
 const getStyleLoader = require("./getStyleLoader");
 
 const threads = os.cpus().length; // cpu核数
@@ -112,6 +113,14 @@ module.exports = {
     // 单独输出css文件，而不是 style标签内嵌在html中
     new MiniCssExtractPlugin({
       filename: "css/index.css",
+    }),
+
+    // pwa
+    new WorkboxPlugin.GenerateSW({
+      // 这些选项帮助快速启用 ServiceWorkers
+      // 不允许遗留任何“旧的” ServiceWorkers
+      clientsClaim: true,
+      skipWaiting: true,
     }),
   ],
 
