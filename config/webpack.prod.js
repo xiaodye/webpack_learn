@@ -19,7 +19,11 @@ module.exports = {
     path: path.resolve(__dirname, "../build"), // 打包根目录
 
     // 入口文件打包地方
-    filename: "./js/index.js", // 相对路径
+    filename: "static/[name].js", // 相对路径
+    chunkFilename: "static/js/[name].chunk.js",
+
+    // 图片字体通过type: asset处理资源命名方式
+    assetModuleFilename: "static/media/[hash:10][ext][query]",
     clean: true, // 打包前清空打包目录
   },
 
@@ -51,17 +55,17 @@ module.exports = {
                 maxSize: 1 * 1024,
               },
             },
-            generator: {
-              filename: "static/[hash][ext][query]",
-            },
+            // generator: {
+            //   filename: "static/[hash][ext][query]",
+            // },
           },
           // 打包静态资源（字体图标，音频，视频）
           {
             test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
             type: "asset/resource",
-            generator: {
-              filename: "static/[hash][ext][query]",
-            },
+            // generator: {
+            //   filename: "static/[hash][ext][query]",
+            // },
           },
 
           // babel
@@ -112,7 +116,8 @@ module.exports = {
 
     // 单独输出css文件，而不是 style标签内嵌在html中
     new MiniCssExtractPlugin({
-      filename: "css/index.css",
+      filename: "static/css/[name].css",
+      chunkFilename: "static/css/[name].chunk.css",
     }),
 
     // pwa
@@ -134,6 +139,30 @@ module.exports = {
         parallel: threads,
       }),
     ],
+
+    // 代码分割块
+    splitChunks: {
+      // chunks: "all",
+      // 其他都用默认值
+      // minSize: 20000,
+      // minRemainingSize: 0,
+      // minChunks: 1,
+      // maxAsyncRequests: 30,
+      // maxInitialRequests: 30,
+      // enforceSizeThreshold: 50000,
+      // cacheGroups: {
+      //   defaultVendors: {
+      //     test: /[\\/]node_modules[\\/]/,
+      //     priority: -10,
+      //     reuseExistingChunk: true,
+      //   },
+      //   default: {
+      //     minChunks: 2,
+      //     priority: -20,
+      //     reuseExistingChunk: true,
+      //   },
+      // },
+    },
   },
 
   // 生产 | 开发

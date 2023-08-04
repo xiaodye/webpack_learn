@@ -3,6 +3,7 @@ const os = require("node:os");
 const EslintWebpackPlugin = require("eslint-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const DemoPlugin = require("../plugins/DemoPlugin");
 const getStyleLoader = require("./getStyleLoader");
 
 const threads = os.cpus().length; // cpu核数
@@ -18,6 +19,10 @@ module.exports = {
 
     // 入口文件打包地方
     filename: "js/index.js",
+  },
+
+  resolveLoader: {
+    module: ["../loader", "../node_modules"],
   },
 
   // 加载器
@@ -110,6 +115,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "css/index.css",
     }),
+
+    // 自编写 plugins
+    new DemoPlugin(),
   ],
 
   // 开发服务器，开发模式下，不会输出到dist，在内存中编译
